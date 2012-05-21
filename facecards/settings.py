@@ -170,7 +170,7 @@ LOGGING = {
 
 FACEBOOK_APP_ID = '236508886458509'
 FACEBOOK_APP_SECRET = '7651e5f91f5e02a4dc4d247b18f8843b'
-FACEBOOK_REDIRECT_URI = 'http://127.0.0.1:8000/login/' # <<-- This really must be /login/
+FACEBOOK_REDIRECT_URI = 'http://http://radiant-summer-5174.herokuapp.com/login/' # <<-- This really must be /login/
 FACEBOOK_APP_SCOPE = ','.join(['user_relationships', 
                                'friends_birthday', 'email']) # You can change to facebook scopes you want to use
 
