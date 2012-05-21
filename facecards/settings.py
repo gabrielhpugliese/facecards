@@ -11,8 +11,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '/home/pedro/workspace/django_projects/facecards/facecards.db', # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -106,6 +106,7 @@ ROOT_URLCONF = 'facecards.urls'
 WSGI_APPLICATION = 'facecards.wsgi.application'
 
 TEMPLATE_DIRS = (
+    'facecards/django_fukinbook/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -118,6 +119,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_fukinbook',
+    'django.contrib.admin',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -132,23 +135,52 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s [%(levelname)s] - %(module)s: %(message)s'
+        },
+        'verbose': {
+            'format': '%(asctime)s %(filename)s:%(lineno)d - [%(levelname)s] %(message)s'
+        },
     },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
+        '': {
+             'handlers': ['console'],
+             'level': 'DEBUG',
+             'propagate': True,
+        },
+        'django.db.backends': {
+            'handlers': ['console'],
             'level': 'ERROR',
-            'propagate': True,
+            'propagate': False,
         },
     }
 }
+
+FACEBOOK_APP_ID = '236508886458509'
+FACEBOOK_APP_SECRET = '7651e5f91f5e02a4dc4d247b18f8843b'
+FACEBOOK_REDIRECT_URI = 'http://127.0.0.1:8000/login/' # <<-- This really must be /login/
+FACEBOOK_APP_SCOPE = ','.join(['user_relationships', 
+                               'friends_birthday', 'email']) # You can change to facebook scopes you want to use
+
+
+AUTHENTICATION_BACKENDS = (
+    'django_fukinbook.backends.FacebookBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+AUTH_PROFILE_MODULE = 'django_fukinbook.UserProfile'
+
+GRAPH_API_URL = 'https://graph.facebook.com/'
+MAIN_URL = '/canvas/' # This is the index of your facebook app
