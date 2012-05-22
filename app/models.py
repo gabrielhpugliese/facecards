@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Game(models.Model):
+	status = models.CharField(max_length=1)
 
 class Player(models.Model):
+    game = models.ForeignKey(Game)
     user = models.ForeignKey(User)
     last_round = models.IntegerField()
     
@@ -29,10 +32,6 @@ class Attribute(models.Model):
         return '{0} - {1}'.format(self.name, self.attr)
 
     
-class Game(models.Model):
-	status = models.CharField(max_length=1)
-	player1 = models.ForeignKey(Player, related_name="player1")
-	player2 = models.ForeignKey(Player, related_name="player2")
         
         
 class Round(models.Model):
