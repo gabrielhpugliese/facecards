@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %} Facecards - User {% endblock %}
+
+{% block content %}
+
+{% if user %}
+    <h1>{{user.first_name}} {{user.last_name}}</h1>
+    <img src='{{user.get_profile.pic_square}}' alt='{{user.first_name}}' />
+{% else %}
+    <p>{{message}}</p>
+{% endif %}
+
+{% endblock %}

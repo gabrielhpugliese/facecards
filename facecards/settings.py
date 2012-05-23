@@ -1,5 +1,12 @@
 # Django settings for facecards project.
 
+# Django settings for teammaia_fbhack project.
+import os
+
+SETTINGS_DIR = os.path.abspath(os.path.dirname(__file__))
+
+PROJECT_ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -67,10 +74,9 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
 # Additional locations of static files
+# Additional locations of static files
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_ROOT_PATH, 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -107,10 +113,8 @@ ROOT_URLCONF = 'facecards.urls'
 WSGI_APPLICATION = 'facecards.wsgi.application'
 
 TEMPLATE_DIRS = (
-    'facecards/django_fukinbook/templates',
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_ROOT_PATH, 'templates'),
+    os.path.join(PROJECT_ROOT_PATH, 'facecards/django_fukinbook/templates'),
 )
 
 INSTALLED_APPS = (

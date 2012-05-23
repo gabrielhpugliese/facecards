@@ -1,6 +1,6 @@
-# Create your views here.
-
 from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.shortcuts import render_to_response
 
 def get_friends(player):
     return [1,2,3]
@@ -38,4 +38,17 @@ def create_game(request):
 
 def canvas(request):
     return HttpResponse('Voce logou -- acho que precisa daqueles auth_required antes pra dar tudo certo -- ou eu pego a session na mao e adiciono o usuario no banco')
+    
+    
+def show_users(request):
+    users = User.objects.all()
+    return render_to_response('users.html', {'users': users})
+
+def user_details(request, user_id):
+    if not request.user.is_authenticated():
+        return render_to_response('user_details.html', {'user': None, 'message': 'You\'re not logged in.'})
+    user = User.objects.get(pk=user_id)
+    return render_to_response('user_details.html', {'user': user, 'message': 'success'})
+
+
 
