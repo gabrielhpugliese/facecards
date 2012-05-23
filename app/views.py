@@ -1,5 +1,7 @@
 # Create your views here.
 
+from django.http import HttpResponse
+
 def get_friends(player):
     return [1,2,3]
     #return None
@@ -13,7 +15,7 @@ def create_cards(player):
         c.save()
         Attribute(card=c, name="likes", attr=1 ).save() #f.get( likes_count )
         Attribute(card=c, name="friends", attr=2 ).save()
-        count++
+        count += 1
         
 
 def create_game(request):
@@ -32,4 +34,8 @@ def create_game(request):
     
     Round(round_number=1, game=game).save()
     
-    return HttpResponse(  )
+    return HttpResponse('OK')
+
+def canvas(request):
+    return HttpResponse('Voce logou -- acho que precisa daqueles auth_required antes pra dar tudo certo -- ou eu pego a session na mao e adiciono o usuario no banco')
+

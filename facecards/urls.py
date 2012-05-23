@@ -13,7 +13,8 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^create_game/', 'facecards.views.create_game', name='create_game')
+    url(r'^create_game/', 'app.views.create_game', name='create_game'),
+    url(r'^canvas/', 'app.views.canvas', name='canvas'),
 )
 
 urlpatterns += patterns('',

@@ -12,7 +12,8 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/home/pedro/workspace/django_projects/facecards/facecards.db', # Or path to database file if using sqlite3.
+#        'NAME': '/home/pedro/workspace/django_projects/facecards/facecards.db', # Or path to database file if using sqlite3.
+        'NAME': 'sqlite3.db', # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -171,7 +172,9 @@ LOGGING = {
 
 FACEBOOK_APP_ID = '236508886458509'
 FACEBOOK_APP_SECRET = '7651e5f91f5e02a4dc4d247b18f8843b'
-FACEBOOK_REDIRECT_URI = 'http://radiant-summer-5174.herokuapp.com/login/' # <<-- This really must be /login/
+#FACEBOOK_REDIRECT_URI = 'http://radiant-summer-5174.herokuapp.com/login/' # <<-- This really must be /login/
+FACEBOOK_REDIRECT_URI = 'http://127.0.0.1:8000/login/' # <<-- This really must be /login/
+
 FACEBOOK_APP_SCOPE = ','.join(['user_relationships', 
                                'friends_birthday', 'email']) # You can change to facebook scopes you want to use
 
