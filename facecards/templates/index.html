@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if friends %}
+    <ul class="nav nav-list">
+        {% for f in friends %}    
+            <li><p>
+                <a href='/users/{{f.uid}}'>{{f.name}}</a>
+                {% if f.ourUser %}
+                <a class="btn btn-primary" href='/create_game/{{f.uid}}'>Create Game</a>
+                {% endif %}
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

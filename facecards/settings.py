@@ -179,8 +179,7 @@ FACEBOOK_APP_SECRET = '7651e5f91f5e02a4dc4d247b18f8843b'
 #FACEBOOK_REDIRECT_URI = 'http://radiant-summer-5174.herokuapp.com/login/' # <<-- This really must be /login/
 FACEBOOK_REDIRECT_URI = 'http://127.0.0.1:8000/login/' # <<-- This really must be /login/
 
-FACEBOOK_APP_SCOPE = ','.join(['user_relationships', 
-                               'friends_birthday', 'email']) # You can change to facebook scopes you want to use
+FACEBOOK_APP_SCOPE = ','.join(['friends_likes']) # You can change to facebook scopes you want to use
 
 
 AUTHENTICATION_BACKENDS = (
@@ -191,4 +190,4 @@ AUTHENTICATION_BACKENDS = (
 AUTH_PROFILE_MODULE = 'django_fukinbook.UserProfile'
 
 GRAPH_API_URL = 'https://graph.facebook.com/'
-MAIN_URL = '/canvas/' # This is the index of your facebook app
+MAIN_URL = '/' # This is the index of your facebook app

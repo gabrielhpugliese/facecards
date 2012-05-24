@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if games %}
+    <ul class="nav nav-list">
+        {% for g in games %}    
+            <li><p>
+                <a href='/games/{{g.id}}'>{% for p in g.player_set.all %} {{p.user.first_name}} - {% endfor %} Game</a>
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

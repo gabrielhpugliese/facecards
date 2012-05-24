@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if game %}
+    <p>Players</p>
+    <ul class="nav nav-list">
+        {% for p in players %}
+            <li><p>
+                <a href='/users/{{p.user.pk}}'>{{p.user.first_name}}</a>
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+    {% for p in players %}    
+        <p>{{p.user.first_name}} Cards:</p>
+        <ul>
+        {% for c in p.card_set.all %}
+        <li><p>
+            <img src="{{c.pic_square}}" />
+            <a href='#'>{{c.name}}</a>
+            {% for attr in c.attribute_set.all %}
+            <p>{{attr.name}}: {{attr.attr}}</p>
+            {% endfor %}
+            </p>
+        </li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+{% endif %}
+{% endblock %}
