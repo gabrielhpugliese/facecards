@@ -5,6 +5,7 @@ from django_fukinbook.decorators import facebook_auth_required
 from django_fukinbook.graph_api import GraphAPI
 from models import *
 import simplejson
+import random
 
 def get_friends(player_fb_id, access_token):
     api = GraphAPI(access_token)
@@ -16,16 +17,15 @@ def get_friends(player_fb_id, access_token):
     
     return friends
 
-def create_cards(player, access_token):
+def create_cards(player, access_token, limit=20):
     player_friends = get_friends( player.user.username, access_token )
+    random.shuffle(player_friends)
     
-    count = 1
+    count = 0
     for f in player_friends:
             
         likes_count = f['likes_count']
         friend_count = f['friend_count']
-        print likes_count
-        print friend_count
         if likes_count == None or friend_count == None:
             continue
         
@@ -34,6 +34,9 @@ def create_cards(player, access_token):
         Attribute(card=c, name="likes", attr=likes_count ).save()
         Attribute(card=c, name="friends", attr=friend_count ).save()
         count += 1
+        if count == limit:
+            break
+            
     return player_friends
         
 @facebook_auth_required

@@ -2,17 +2,17 @@
 
 {% block content %}
 {% if game %}
-    <p>Players</p>
+    <h1>Players</h1>
     <ul class="nav nav-list">
         {% for p in players %}
-            <li><p>
+            <li><h2>
                 <a href='/users/{{p.user.pk}}'>{{p.user.first_name}}</a>
-                </p>
+                </h2>
             </li>
         {% endfor %}
     </ul>
     {% for p in players %}    
-        <p>{{p.user.first_name}} Cards:</p>
+        <h2>{{p.user.first_name}} Cards:</h2>
         <ul>
         {% for c in p.card_set.all %}
         <li><p>
