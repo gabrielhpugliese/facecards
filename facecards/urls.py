@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^games/(?P<game_id>\d+)$', 'app.views.game_details', name='game_details'),
     url(r'^$', 'app.views.index', name='index'),
     url(r'^users/$', 'app.views.show_users', name='show_users'),
-    url(r'^users/(?P<user_id>\d+)/$', 'app.views.user_details', name='user_details'),
+    url(r'^users/(?P<user_id>\w+)/$', 'app.views.user_details', name='user_details'),
 )
 
 urlpatterns += patterns('',

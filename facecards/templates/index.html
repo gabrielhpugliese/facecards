@@ -5,9 +5,12 @@
     <ul class="nav nav-list">
         {% for f in friends %}    
             <li><p>
-                <a href='/users/{{f.uid}}'>{{f.name}}</a>
                 {% if f.ourUser %}
+                <a href='/users/{{f.uid}}'>{{f.name}}</a>
                 <a class="btn btn-primary" href='/create_game/{{f.uid}}'>Create Game</a>
+                {% else %}
+                <a href='/users/invite/{{f.uid}}'>{{f.name}}</a>
+				<!-- <a class="btn btn-primary" href='/invite/{{f.uid}}'>Invite to facecards</a> -->
                 {% endif %}
                 </p>
             </li>

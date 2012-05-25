@@ -87,7 +87,7 @@ def user_details(request, user_id):
     if not request.user.is_authenticated():
         return render_to_response('user_details.html', {'user': None, 'message': 'You\'re not logged in.'})
     try:
-        user = User.objects.get(pk=user_id)
+        user = User.objects.get(username=user_id)
         return render_to_response('user_details.html', {'user': user, 'message': 'success'})
     except:
         return render_to_response('user_details.html', {'user': None, 'message': 'Your friend is not on our database'})
