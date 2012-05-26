@@ -17,6 +17,7 @@
         {% for c in p.card_set.all %}
         <li><p>
             <img src="{{c.pic_square}}" />
+<!-- Faz criar outro jogo quando clica aqui! Eita hehehe -->
             <a href='#'>{{c.name}}</a>
             {% for attr in c.attribute_set.all %}
             <p>{{attr.name}}: {{attr.attr}}</p>

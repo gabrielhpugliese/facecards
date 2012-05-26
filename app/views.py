@@ -56,7 +56,8 @@ def create_game(request, opponent_fb_id):
     
     Round(round_number=1, game=game).save()
     
-    return render_to_response("game_details.html", {'game': game})
+    players = game.player_set.all()
+    return render_to_response("game_details.html", {'game': game, 'players' : players})
     
 def list_games(request):
     games = Game.objects.all()
@@ -92,5 +93,28 @@ def user_details(request, user_id):
     except:
         return render_to_response('user_details.html', {'user': None, 'message': 'Your friend is not on our database'})
 
+
+@facebook_auth_required
+def invite_user(request, user_id):
+	print(request.user)
+	friends = get_friends(request.user , request.access_token)
+
+	invited = ""
+	for f in friends:
+		try:
+			u = User.objects.get(username=f['uid'])
+			f['ourUser'] = True
+		except:
+			f['ourUser'] = False
+
+	for f in friends:
+		if(f['uid'] == int(user_id)):
+			invited = f['name']
+
+
+	if invited == "":
+		return render_to_response("index.html", {'friends' : friends})
+	else:
+		return render_to_response("index.html", {'friends' : friends, 'invited' : invited})
 
 

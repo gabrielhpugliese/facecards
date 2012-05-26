@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^$', 'app.views.index', name='index'),
     url(r'^users/$', 'app.views.show_users', name='show_users'),
     url(r'^users/(?P<user_id>\w+)/$', 'app.views.user_details', name='user_details'),
+    url(r'^users/invite/(?P<user_id>\w+)/$', 'app.views.invite_user', name='invite_user'),
 )
 
 urlpatterns += patterns('',

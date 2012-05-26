@@ -1,20 +1,46 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% if invited %}
+	<p> <FONT SIZE="+3">  You have invited your facebook friend {{invited}} to join Facecards </FONT> </p>
+{% endif %}
+
+<br/>
 {% if friends %}
     <ul class="nav nav-list">
+
+		<li> <p> <FONT SIZE="+2">  Create a game </FONT> </p> </li>
+
         {% for f in friends %}    
             <li><p>
                 {% if f.ourUser %}
                 <a href='/users/{{f.uid}}'>{{f.name}}</a>
+<!-- Fazer com POST em vez de  HTML? -->
                 <a class="btn btn-primary" href='/create_game/{{f.uid}}'>Create Game</a>
-                {% else %}
-                <a href='/users/invite/{{f.uid}}'>{{f.name}}</a>
-				<!-- <a class="btn btn-primary" href='/invite/{{f.uid}}'>Invite to facecards</a> -->
                 {% endif %}
                 </p>
             </li>
         {% endfor %}
+	</ul>
+
+		<hr />
+		
+	<p>	<FONT SIZE="+2">  Invite a Facebook friend to Facecards </FONT> </p>
+	<br/>
+
+	<ul>
+
+		{% for f in friends %}    
+            <li><p>
+                {% if f.ourUser %}
+                {% else %}
+                {{f.name}}
+				<a class="btn btn-primary" href='/users/invite/{{f.uid}}'>Invite to facecards</a>
+                {% endif %}
+                </p>
+            </li>
+        {% endfor %}
+
     </ul>
 {% endif %}
 {% endblock %}
