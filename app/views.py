@@ -1,6 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse
 from django_fukinbook.decorators import facebook_auth_required
 from django_fukinbook.graph_api import GraphAPI
 from models import *
@@ -21,7 +22,7 @@ def create_cards(player, access_token, limit=20):
     player_friends = get_friends( player.user.username, access_token )
     random.shuffle(player_friends)
     
-    count = 0
+    count = 1
     for f in player_friends:
             
         likes_count = f['likes_count']
@@ -34,7 +35,7 @@ def create_cards(player, access_token, limit=20):
         Attribute(card=c, name="likes", attr=likes_count ).save()
         Attribute(card=c, name="friends", attr=friend_count ).save()
         count += 1
-        if count == limit:
+        if count == limit+1:
             break
             
     return player_friends
@@ -57,7 +58,7 @@ def create_game(request, opponent_fb_id):
     Round(round_number=1, game=game).save()
     
     players = game.player_set.all()
-    return render_to_response("game_details.html", {'game': game, 'players' : players})
+    return HttpResponseRedirect(reverse('app.views.game_details', args=(game.id,)))
     
 def list_games(request):
     games = Game.objects.all()
@@ -66,7 +67,27 @@ def list_games(request):
 def game_details(request, game_id):
     game = Game.objects.get(pk=game_id)
     players = game.player_set.all()
-    return render_to_response("game_details.html", {'game': game, 'players': players})
+    
+    player = None
+    player_number = -1
+    if players[0].user == request.user:
+        player = players[0]
+        player_number = 0
+    else:
+        player = players[1]
+        player_number = 1
+        
+    rounds = game.round_set.all()
+    your_turn = False
+    my_last_round = None
+    if player.last_round == len(rounds):
+        if int(game.status) == player_number:
+            your_turn = True
+    else:
+        my_last_round = Round.objects.filter(game=game, round_number=player.last_round)
+        
+    return render_to_response("game_details.html", {'game': game, 'players': players, 
+                                'your_turn': your_turn, 'my_last_round': my_last_round, 'player': player})
 
 @facebook_auth_required
 def index(request):

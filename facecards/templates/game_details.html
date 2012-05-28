@@ -6,24 +6,43 @@
     <ul class="nav nav-list">
         {% for p in players %}
             <li><h2>
-                <a href='/users/{{p.user.pk}}'>{{p.user.first_name}}</a>
+                <a href='/users/{{p.user.username}}'>{{p.user.first_name}}</a>
                 </h2>
             </li>
         {% endfor %}
     </ul>
+    
+    {% if your_turn %}
+        <h2>SUA VEZ</h2>
+    {% else %}
+        <h2>NAO É SUA VEZ</h2>
+    {% endif %}
+    
+    {% if my_last_round %}
+        <h2>Agora vc vai ver o ultimo round q vc nao viu</h2>
+    {% else %}
+        <h2>Voce ta no ultimo round</h2>
+    {% endif %}
+    
+    
     {% for p in players %}    
         <h2>{{p.user.first_name}} Cards:</h2>
         <ul>
         {% for c in p.card_set.all %}
-        <li><p>
-            <img src="{{c.pic_square}}" />
-<!-- Faz criar outro jogo quando clica aqui! Eita hehehe -->
-            <a href='#'>{{c.name}}</a>
-            {% for attr in c.attribute_set.all %}
-            <p>{{attr.name}}: {{attr.attr}}</p>
-            {% endfor %}
-            </p>
-        </li>
+            {% if c.order == p.last_round %}
+                <li><p>
+                    <h3>Carta da vez!</h3>
+                    <img src="{{c.pic_square}}" />
+                    <a href=''>{{c.name}}</a>
+                    {% for attr in c.attribute_set.all %}
+                    {% if your_turn %}
+                    <a class="btn btn-primary" href=''>{{attr.name}}: {{attr.attr}}</a>
+                    {% else %}
+                    <p>{{attr.name}}: {{attr.attr}}</p>
+                    {% endif %}
+                    {% endfor %}
+                </p></li>
+            {% endif %}
         {% endfor %}
         </ul>
     {% endfor %}
