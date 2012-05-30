@@ -8,7 +8,7 @@
     <h1>{{user.first_name}} {{user.last_name}}</h1>
     <img src='{{user.get_profile.pic_square}}' alt='{{user.first_name}}' />
 {% else %}
-    <p>{{message}}</p>
+    <p>User not found</p>
 {% endif %}
 
 {% endblock %}

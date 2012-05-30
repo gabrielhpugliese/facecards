@@ -4,7 +4,6 @@
 import os
 
 SETTINGS_DIR = os.path.abspath(os.path.dirname(__file__))
-
 PROJECT_ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 DEBUG = True
