@@ -17,14 +17,14 @@ class GameHandler(object):
         for f in player_friends:
             likes_count = f['likes_count']
             friend_count = f['friend_count']
-            if likes_count == None or friend_count == None:
+            if not likes_count or not friend_count:
                 continue
             
             c = Card(player=player, name=f['name'], pic_square=f['pic_square'], 
                      order=count)
             c.save()
-            Attribute(card=c, name="likes", attr=likes_count ).save()
-            Attribute(card=c, name="friends", attr=friend_count ).save()
+            Attribute(card=c, name="likes", attr=likes_count).save()
+            Attribute(card=c, name="friends", attr=friend_count).save()
             count += 1
             if count == limit+1:
                 break
@@ -52,13 +52,13 @@ class GameHandler(object):
         
         return game.id
     
-    def get_game_details(self, player, game_id):
+    def get_game_details(self, user, game_id):
         game = Game.objects.get(pk=game_id)
         players = game.player_set.all()
         
         player = None
         player_number = -1
-        if players[0].user == request.user:
+        if players[0].user == user:
             player = players[0]
             player_number = 0
         else:

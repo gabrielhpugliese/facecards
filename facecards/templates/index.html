@@ -13,7 +13,7 @@
 
         {% for f in friends %}    
             <li><p>
-                {% if f.ourUser %}
+                {% if f.our_user %}
                 <a href='/users/{{f.uid}}'>{{f.name}}</a>
 <!-- Fazer com POST em vez de  HTML? -->
                 <a class="btn btn-primary" href='/create_game/{{f.uid}}'>Create Game</a>
@@ -32,7 +32,7 @@
 
 		{% for f in friends %}    
             <li><p>
-                {% if f.ourUser %}
+                {% if f.our_user %}
                 {% else %}
                 {{f.name}}
 				<a class="btn btn-primary" href='/users/invite/{{f.uid}}'>Invite to facecards</a>

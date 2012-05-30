@@ -10,6 +10,7 @@ import random
 from django.contrib.auth.decorators import login_required
 from facebook_client import FacebookClient
 from game_handler import GameHandler
+import logging
 
 @facebook_auth_required
 def create_game(request, opponent_fb_id):
@@ -32,12 +33,15 @@ def game_details(request, game_id):
 def index(request):
     client = FacebookClient(request.access_token)
     friends = client.get_friends()
-    for f in friends:
-        try:
-            u = User.objects.get(username=f['uid'])
-            f['our_user'] = True
-        except:
-            f['our_user'] = False
+    friends.sort(key=(lambda x: x['name']))
+
+    if friends:
+        for f in friends:
+            try:
+                u = User.objects.get(username=f['uid'])
+                f['our_user'] = True
+            except:
+                f['our_user'] = False
     return render_to_response("index.html", {'friends' : friends})
 
 def show_users(request):
