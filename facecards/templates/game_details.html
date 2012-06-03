@@ -12,6 +12,8 @@
         {% endfor %}
     </ul>
     
+    <a class="btn btn-primary" href='/refresh_round/{{game.id}}/{{player_number}}'> Refresh round {{player_round_number}} / {{game_round_number}}</a>
+
     {% if your_turn %}
         <h2>SUA VEZ</h2>
     {% else %}
@@ -36,7 +38,7 @@
                     <a href=''>{{c.name}}</a>
                     {% for attr in c.attribute_set.all %}
                     {% if your_turn %}
-                    <a class="btn btn-primary" href=''>{{attr.name}}: {{attr.attr}}</a>
+                    <a class="btn btn-primary" href='/solve_round/{{game.id}}/{{attr.name}}'>{{attr.name}}: {{attr.attr}}</a>
                     {% else %}
                     <p>{{attr.name}}: {{attr.attr}}</p>
                     {% endif %}

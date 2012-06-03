@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     url(r'^users/$', 'app.views.show_users', name='show_users'),
     url(r'^users/(?P<user_id>\w+)/$', 'app.views.user_details', name='user_details'),
     url(r'^users/invite/(?P<user_id>\w+)/$', 'app.views.invite_user', name='invite_user'),
+    url(r'^solve_round/(?P<game_id>\w+)/(?P<attr_name>\w+)/$', 'app.views.solve_round', name='solve_round'),
+    url(r'^refresh_round/(?P<game_id>\w+)/(?P<player_number>\w+)/$', 'app.views.refresh_round', name='refresh_round'),
 )
 
 urlpatterns += patterns('',

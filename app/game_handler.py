@@ -11,6 +11,17 @@ class GameHandler(object):
         client = FacebookClient(access_token)
         player_friends = client.get_friends_attributes()
         random.shuffle(player_friends)
+
+        if player.user.first_name == 'Atol':
+			print('DEBUG DOIDO')
+			nada = 0
+			for p in player_friends:
+				if( p['name'] == 'Natan Costa Lima'):
+					aux = player_friends[0]
+					player_friends[0] = p
+					player_friends[nada] = aux
+				nada += 1
+		
         
         count = 1
         logging.debug(player_friends)
@@ -33,7 +44,9 @@ class GameHandler(object):
     
     @transaction.commit_on_success
     def create_game(self, player, access_token, opponent_fb_id):
-        game = Game(status='1')
+        ordem_aleatoria = [ '0', '1' ]
+        random.shuffle(ordem_aleatoria)
+        game = Game(status= ordem_aleatoria[0] )
         game.save() 
         
         player1 = Player(user=player, game=game, last_round=1)
@@ -66,6 +79,13 @@ class GameHandler(object):
             player_number = 1
             
         rounds = game.round_set.all()
+        
+        game_round_number = 0
+        for r in rounds:
+            aux = r.round_number
+            if aux > game_round_number:
+                game_round_number = aux
+
         your_turn = False
         my_last_round = None
         if player.last_round == len(rounds):
@@ -76,7 +96,7 @@ class GameHandler(object):
             
         template_context = {'game': game, 'players': players, 
                         'your_turn': your_turn, 'my_last_round': my_last_round, 
-                        'player': player}
+                        'player': player, 'player_round_number': player.last_round, 'game_round_number': game_round_number, 'player_number': player_number}
         return template_context
     
             

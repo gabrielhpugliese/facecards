@@ -78,3 +78,26 @@ def invite_user(request, user_id):
     template_context = {'friends' : friends, 'invited' : invited}
     return render_to_response("index.html", template_context)
 
+@login_required    
+def solve_round(request, game_id, attr_name):
+    #Fazer a logica pra ver quem ganhou
+    #atualizar o Round com o atributo escolhido
+    #atualizar as cartas do player que ganhou
+    #atualizar o round do player que jogou
+    #atualizar o status do game
+    #criar um round novo
+
+    game = Game.objects.get(pk=int(game_id))
+    total = len( game.round_set.all() )
+    Round(round_number=total+1, game=game).save()
+    return HttpResponseRedirect(reverse('app.views.game_details', args=(game_id,)))
+
+@login_required    
+def refresh_round(request, game_id, player_number):
+    game = Game.objects.get(pk=int(game_id))
+    total = len( game.round_set.all() )
+    player = game.player_set.all()[ int(player_number) ]
+    if player.last_round < total:
+        player.last_round += 1
+        player.save()
+    return HttpResponseRedirect(reverse('app.views.game_details', args=(game_id,)))
